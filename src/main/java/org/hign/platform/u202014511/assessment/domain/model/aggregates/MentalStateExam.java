@@ -61,24 +61,15 @@ public class MentalStateExam extends AuditableAbstractAggregateRoot<MentalStateE
 
     protected MentalStateExam() {}
 
-    public MentalStateExam(CreateMentalStateExamCommand command) {
+    public MentalStateExam(CreateMentalStateExamCommand command, Date examDate) {
         this.patientId = command.patientId();
         this.examinerNationalProviderIdentifier = new ExaminerNationalProviderIdentifier(command.examinerNationalProviderIdentifier());
-        this.examDate = parseExamDate(command.examDate());
+        this.examDate = examDate;
         this.orientationScore = command.orientationScore();
         this.registrationScore = command.registrationScore();
         this.attentionAndCalculationScore = command.attentionAndCalculationScore();
         this.recallScore = command.recallScore();
         this.languageScore = command.languageScore();
-    }
-
-    private Date parseExamDate(String examDateString) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return dateFormat.parse(examDateString);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("The format of the exam date is invalid. It should be in the format yyyy-MM-dd.");
-        }
     }
 
     public String getExaminerNationalProviderIdentifier() {
