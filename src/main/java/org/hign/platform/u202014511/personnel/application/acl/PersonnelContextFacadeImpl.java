@@ -14,7 +14,9 @@ public class PersonnelContextFacadeImpl implements PersonnelContextFacade {
     }
 
     @Override
-    public boolean existsExaminer(String examinerNationalProviderIdentifier) {
-        return examinerRepository.existsByNationalProviderIdentifier(new NationalProviderIdentifier(examinerNationalProviderIdentifier));
+    public void existsExaminer(String examinerNationalProviderIdentifier) {
+        if (!examinerRepository.existsByNationalProviderIdentifier(new NationalProviderIdentifier(examinerNationalProviderIdentifier))) {
+            throw new IllegalArgumentException("Examiner with NPI " + examinerNationalProviderIdentifier + " does not exist");
+        }
     }
 }
