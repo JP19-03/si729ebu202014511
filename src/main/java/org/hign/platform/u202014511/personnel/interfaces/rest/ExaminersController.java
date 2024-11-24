@@ -9,6 +9,7 @@ import org.hign.platform.u202014511.personnel.interfaces.rest.resources.CreateEx
 import org.hign.platform.u202014511.personnel.interfaces.rest.resources.ExaminerResource;
 import org.hign.platform.u202014511.personnel.interfaces.rest.transform.CreateExaminerCommandFromResourceAssembler;
 import org.hign.platform.u202014511.personnel.interfaces.rest.transform.ExaminerResourceFromEntityAssembler;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,6 @@ public class ExaminersController {
         if (examiner.isEmpty()) return ResponseEntity.badRequest().build();
         var createdExaminer = examiner.get();
         var examineResource = ExaminerResourceFromEntityAssembler.toResourceFromEntity(createdExaminer);
-        return ResponseEntity.ok(examineResource);
+        return new ResponseEntity<>(examineResource, HttpStatus.CREATED);
     }
 }
